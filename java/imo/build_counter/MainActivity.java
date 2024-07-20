@@ -40,11 +40,13 @@ public class MainActivity extends Activity {
         final String KEY = apkPackageName;
         
         String recordString = sp.getString(KEY, null);
-        String countString = recordString == null ? recordString.split(" ", 2)[0] : "0";
-        build_count = Integer.parseInt(countString.trim());
+        String[] recordStringParts = recordString.split(" ", 2);
+        String count = recordString == null ? recordStringParts[0] : "0";
+        String dateAndTime = recordStringParts[1];
+        build_count = Integer.parseInt(count.trim());
         
         Button btn = findViewById(R.id.btn);
-        btn.setText(apkPackageName + "\n" + build_count);
+        btn.setText(apkPackageName + "\n" + build_count + "\n\n\n\nlast count: " + dateAndTime);
         
         btn.setOnClickListener( new OnClickListener(){
             @Override
