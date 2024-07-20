@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -36,7 +38,10 @@ public class MainActivity extends Activity {
         final String apkPackageName = getApkPackageName(this, apkUri);
         
         final String KEY = apkPackageName;
-        build_count = sp.getInt(KEY, 0);
+        
+        String recordString = sp.getString(KEY, null);
+        String countString = recordString == null ? recordString.split(" ", 2)[0] : "0";
+        build_count = Integer.parseInt(countString.trim());
         
         Button btn = findViewById(R.id.btn);
         btn.setText(apkPackageName + "\n" + build_count);
@@ -50,7 +55,13 @@ public class MainActivity extends Activity {
                 btn.setText(apkPackageName + "\n" + build_count);
                 btn.setEnabled(false);
                 
-                sp.edit().putInt(KEY, build_count).apply();
+                Calendar cal = Calendar.getInstance();
+                String recordString = 
+                    build_count + " " + 
+                    getCurrentDate(cal) + " " + 
+                    getCurrentTime(cal);
+                
+                sp.edit().putString(KEY, recordString).apply();
                 installApk(apkUri);
                 finish();
             }
@@ -108,4 +119,17 @@ public class MainActivity extends Activity {
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(intent);
     }
+    
+    private String getCurrentDate(Calendar calendar){
+        //will return e.g 2024-MAY-19
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MMM-dd");
+        return dateFormat.format(calendar.getTime());
+    }
+
+    private String getCurrentTime(Calendar calendar){
+        //will return e.g 01:39pm
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mma");
+        return dateFormat.format(calendar.getTime());
+    }
+    
 }
