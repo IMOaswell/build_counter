@@ -38,14 +38,17 @@ public class MainActivity extends Activity {
         final String KEY = apkPackageName;
         build_count = sp.getInt(KEY, 0);
         
-        final Button btn = findViewById(R.id.btn);
+        Button btn = findViewById(R.id.btn);
         btn.setText(apkPackageName + "\n" + build_count);
         
         btn.setOnClickListener( new OnClickListener(){
             @Override
             public void onClick(View v){
                 build_count++;
+                
+                Button btn = (Button) v;
                 btn.setText(apkPackageName + "\n" + build_count);
+                btn.setEnabled(false);
                 
                 sp.edit().putInt(KEY, build_count).apply();
                 installApk(apkUri);
