@@ -33,20 +33,23 @@ public class MainActivity extends Activity {
         if(!recieveApk) return;
         
         final SharedPreferences sp = getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
-        String apkPackageName = getApkPackageName(this, apkUri);
+        final String apkPackageName = getApkPackageName(this, apkUri);
         
         final String KEY = apkPackageName;
         build_count = sp.getInt(KEY, 0);
         
-        Button btn = findViewById(R.id.btn);
+        final Button btn = findViewById(R.id.btn);
         btn.setText(apkPackageName + "\n" + build_count);
         
         btn.setOnClickListener( new OnClickListener(){
             @Override
             public void onClick(View v){
                 build_count++;
+                btn.setText(apkPackageName + "\n" + build_count);
+                
                 sp.edit().putInt(KEY, build_count).apply();
                 installApk(apkUri);
+                finish();
             }
         });
     }
