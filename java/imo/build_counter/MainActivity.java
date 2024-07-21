@@ -31,6 +31,7 @@ public class MainActivity extends Activity {
         final Intent intent = getIntent();
         final Uri apkUri = intent.getData();
         boolean recieveApk = Intent.ACTION_VIEW.equals(intent.getAction());
+        Button btn = findViewById(R.id.btn);
         
         if(!recieveApk) return;
         
@@ -39,14 +40,16 @@ public class MainActivity extends Activity {
         
         final String KEY = apkPackageName;
         
-        String recordString = sp.getString(KEY, null);
+        String recordString = sp.getString(KEY, "0 ");
         String[] recordStringParts = recordString.split(" ", 2);
-        String count = recordString == null ? recordStringParts[0] : "0";
+        String count = recordStringParts[0];
         String dateAndTime = recordStringParts[1];
         build_count = Integer.parseInt(count.trim());
-        
-        Button btn = findViewById(R.id.btn);
-        btn.setText(apkPackageName + "\n" + build_count + "\n\n\n\nlast count: " + dateAndTime);
+
+        btn.setText(apkPackageName + "\n" + build_count);
+        btn.append("\n\n\n\n");
+        if(dateAndTime.isEmpty()) btn.append("start counting now:D");
+        if(!dateAndTime.isEmpty()) btn.append("last count: " + dateAndTime);
         
         btn.setOnClickListener( new OnClickListener(){
             @Override
