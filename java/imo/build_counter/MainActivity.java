@@ -21,10 +21,10 @@ public class MainActivity extends Activity {
     static String SHARED_PREFS_KEY = "PACKAGE_NAMES";
     int build_count = 0;
     Uri apkUri;
-    Button btn;
-    TextView txt;
-    Button clearBtn;
-    CompoundButton switchBtn;
+    Button recordBtn;
+    TextView historyTxt;
+    Button clearHistoryBtn;
+    CompoundButton switchTabBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +35,12 @@ public class MainActivity extends Activity {
         apkUri = getIntent().getData();
         boolean recieveApk = Intent.ACTION_VIEW.equals(intent.getAction());
 
-        //TODO: better ids
-        final ViewGroup btnParent = findViewById(R.id.btn_parent);
-        final ViewGroup txtParent = findViewById(R.id.txt_parent);
-        switchBtn = findViewById(R.id.switch_btn);
-        btn = findViewById(R.id.btn);
-        txt = findViewById(R.id.txt);
-        clearBtn = findViewById(R.id.clear_btn);
+        final ViewGroup recordBtnParent = findViewById(R.id.record_btn_parent);
+        final ViewGroup historyTxtParent = findViewById(R.id.history_txt_parent);
+        switchTabBtn = findViewById(R.id.switch_tab_btn);
+        recordBtn = findViewById(R.id.record_btn);
+        historyTxt = findViewById(R.id.history_txt);
+        clearHistoryBtn = findViewById(R.id.history_clear_btn);
 
         String packageName = "";
         if(recieveApk) packageName = Utils.getApkPackageName(this, apkUri);
@@ -52,18 +51,18 @@ public class MainActivity extends Activity {
         }
         populateViewsByPackageName(packageName);
 
-        switchBtn.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+        switchTabBtn.setOnCheckedChangeListener(new OnCheckedChangeListener(){
                 @Override
                 public void onCheckedChanged(CompoundButton switchBtn, boolean isChecked) {
                     if(isChecked) {
-                        btnParent.setVisibility(View.GONE);
-                        txtParent.setVisibility(View.VISIBLE);
+                        recordBtnParent.setVisibility(View.GONE);
+                        historyTxtParent.setVisibility(View.VISIBLE);
 
-                        String txtString = txt.getText().toString();
-                        clearBtn.setVisibility(txtString.isEmpty() ? View.GONE : View.VISIBLE);
+                        String txtString = historyTxt.getText().toString();
+                        clearHistoryBtn.setVisibility(txtString.isEmpty() ? View.GONE : View.VISIBLE);
                     } else {
-                        btnParent.setVisibility(View.VISIBLE);
-                        txtParent.setVisibility(View.GONE);
+                        recordBtnParent.setVisibility(View.VISIBLE);
+                        historyTxtParent.setVisibility(View.GONE);
                     }
                 }
             });
@@ -82,10 +81,10 @@ public class MainActivity extends Activity {
         build_count = Integer.parseInt(count.trim());
 
         setTitle(packageName);
-        btn.setText(build_count + "");
-        txt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
+        recordBtn.setText(build_count + "");
+        historyTxt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
 
-        btn.setOnClickListener(new OnClickListener(){
+        recordBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     build_count++;
@@ -99,11 +98,10 @@ public class MainActivity extends Activity {
                     sp.edit().putString(LATEST_COUNT_KEY, recordString).apply();
                     sp.edit().putString(COUNT_HISTORY_KEY, sp.getString(COUNT_HISTORY_KEY, "") + "\n" + recordString).apply();
                     
-                    btn.setText(build_count + "");
-                    txt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
-                    btn.setEnabled(false);
-                    btn.setAlpha(0.5f);
-                    
+                    recordBtn.setText(build_count + "");
+                    historyTxt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
+                    recordBtn.setEnabled(false);
+                    recordBtn.setAlpha(0.5f);
                     
                     Toast.makeText(mContext, R.string.record_count_success, Toast.LENGTH_LONG).show();
                     if(apkUri != null) Utils.installApk(mContext, apkUri);
@@ -111,7 +109,7 @@ public class MainActivity extends Activity {
                 }
             });
 
-        clearBtn.setOnClickListener(new OnClickListener(){
+        clearHistoryBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     sp.edit().putString(LATEST_COUNT_KEY, "").apply();
@@ -119,7 +117,7 @@ public class MainActivity extends Activity {
                     
                     Toast.makeText(mContext, R.string.clear_history_success, Toast.LENGTH_LONG).show();
                     populateViewsByPackageName(packageName);
-                    switchBtn.setChecked(false);//set all back to default
+                    switchTabBtn.setChecked(false);//set all back to default
                 }
             });
     }
