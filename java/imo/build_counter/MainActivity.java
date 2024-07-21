@@ -35,6 +35,7 @@ public class MainActivity extends Activity {
         apkUri = getIntent().getData();
         boolean recieveApk = Intent.ACTION_VIEW.equals(intent.getAction());
         
+        //TODO: better ids
         final ViewGroup btnParent = findViewById(R.id.btn_parent);
         final ViewGroup txtParent = findViewById(R.id.txt_parent);
         switchBtn = findViewById(R.id.switch_btn);
@@ -101,7 +102,7 @@ public class MainActivity extends Activity {
 
                     sp.edit().putString(LATEST_COUNT_KEY, recordString).apply();
                     sp.edit().putString(COUNT_HISTORY_KEY, sp.getString(COUNT_HISTORY_KEY, "") + "\n" + recordString).apply();
-                    
+                    //TODO: use R.string for the toast
                     Toast.makeText(mContext, "successfully recorded. come back again to record another", Toast.LENGTH_LONG).show();
                     if(apkUri != null) Utils.installApk(mContext, apkUri);
                     btn.setEnabled(false);
@@ -114,6 +115,7 @@ public class MainActivity extends Activity {
                 public void onClick(View v){
                     sp.edit().putString(LATEST_COUNT_KEY, "").apply();
                     sp.edit().putString(COUNT_HISTORY_KEY, "").apply();
+                    //TODO: use R.string for the toast
                     Toast.makeText(mContext, "successfully cleared history", Toast.LENGTH_LONG).show();
                     populateViewsByPackageName(packageName);
                     switchBtn.setChecked(false);//set all back to default
