@@ -96,7 +96,7 @@ public class MainActivity extends Activity {
                         Utils.getCurrentTime(cal);
 
                     sp.edit().putString(LATEST_COUNT_KEY, recordString).apply();
-                    sp.edit().putString(COUNT_HISTORY_KEY, sp.getString(COUNT_HISTORY_KEY, "") + "\n" + recordString).apply();
+                    sp.edit().putString(COUNT_HISTORY_KEY, sp.getString(COUNT_HISTORY_KEY, "").trim() + "\n" + recordString).apply();
                     
                     recordBtn.setText(build_count + "");
                     historyTxt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
