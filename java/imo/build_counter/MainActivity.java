@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
     Context mContext;
-    final String SHARED_PREFS_KEY = "PACKAGE_NAMES";
+    static String SHARED_PREFS_KEY = "PACKAGE_NAMES";
     int build_count = 0;
     Uri apkUri;
     Button btn;
