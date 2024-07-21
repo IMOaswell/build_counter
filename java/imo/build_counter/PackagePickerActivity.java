@@ -1,22 +1,23 @@
 package imo.build_counter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import android.view.View.OnClickListener;
-import java.io.File;
-import android.widget.Toast;
-import android.content.Context;
 
 public class PackagePickerActivity extends Activity {
     Context mContext;
@@ -56,7 +57,9 @@ public class PackagePickerActivity extends Activity {
 
             
         final File buildCounterTxt = new File(Utils.INTERNAL_STORAGE, "AppProjects/build_counter.txt");
+        
         Button exportBtn = findViewById(R.id.export_btn);
+        exportBtn.setPaintFlags(exportBtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         exportBtn.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v){
@@ -68,6 +71,7 @@ public class PackagePickerActivity extends Activity {
         });
         
         Button importBtn = findViewById(R.id.import_btn);
+        importBtn.setPaintFlags(importBtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         importBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v){

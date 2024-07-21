@@ -12,15 +12,19 @@
 		android:gravity="right">
 
 		<Button
+            style="?android:attr/buttonBarButtonStyle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="EXPORT"
-			android:id="@+id/export_btn"/>
+			android:id="@+id/export_btn"
+            android:textColor="@color/text_color"/>
         <Button
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="IMPORT"
-            android:id="@+id/import_btn"/>
+            android:id="@+id/import_btn"
+            android:textColor="@color/text_color"/>
 	</LinearLayout>
 
 	<ListView
