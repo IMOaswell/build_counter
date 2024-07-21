@@ -18,6 +18,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.TextView;
+import android.view.ViewGroup;
 
 public class MainActivity extends Activity {
     String INTERNAL_STORAGE = Environment.getExternalStorageDirectory().getPath();
@@ -31,13 +35,17 @@ public class MainActivity extends Activity {
         final Intent intent = getIntent();
         final Uri apkUri = intent.getData();
         boolean recieveApk = Intent.ACTION_VIEW.equals(intent.getAction());
-        Button btn = findViewById(R.id.btn);
+        final Button btn = findViewById(R.id.btn);
+        final ViewGroup txtParent = findViewById(R.id.txt_parent);
+        final TextView txt = findViewById(R.id.txt);
+        final CompoundButton switchBtn = findViewById(R.id.switch_btn);
         
         if(!recieveApk) return;
         
         final SharedPreferences sp = getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
         final String apkPackageName = getApkPackageName(this, apkUri);
         
+        final String COUNT_HISTORY_KEY = apkPackageName + ":count_history";
         final String LATEST_COUNT_KEY = apkPackageName + ":latest_count";
         
         String recordString = sp.getString(LATEST_COUNT_KEY, "0 ");
@@ -50,6 +58,9 @@ public class MainActivity extends Activity {
         btn.append("\n\n\n\n");
         if(dateAndTime.isEmpty()) btn.append("start counting now:D");
         if(!dateAndTime.isEmpty()) btn.append("last count: " + dateAndTime);
+        
+        txt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
+        
         
         btn.setOnClickListener( new OnClickListener(){
             @Override
@@ -67,8 +78,28 @@ public class MainActivity extends Activity {
                     getCurrentTime(cal);
                 
                 sp.edit().putString(LATEST_COUNT_KEY, recordString).apply();
+                sp.edit().putString(COUNT_HISTORY_KEY, sp.getString(COUNT_HISTORY_KEY, "") + "\n" + recordString).apply();
                 installApk(apkUri);
                 finish();
+            }
+        });
+        
+        final String switchOff = "BUTTON";
+        final String switchOn = "TEXT";
+        switchBtn.setText(switchOff);
+        switchBtn.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton switchBtn, boolean isChecked){
+                if(isChecked){
+                    switchBtn.setText(switchOn);
+                    btn.setVisibility(View.GONE);
+                    txtParent.setVisibility(View.VISIBLE);
+                }
+                else{
+                    switchBtn.setText(switchOff);
+                    btn.setVisibility(View.VISIBLE);
+                    txtParent.setVisibility(View.GONE);
+                }
             }
         });
     }

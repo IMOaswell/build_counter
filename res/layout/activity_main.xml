@@ -3,14 +3,36 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:gravity="center">
+	android:gravity="center"
+	android:orientation="vertical">
 
 	<Button
 		android:text="@string/app_name"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_height="wrap_content"
 		android:textSize="40sp"
-		android:id="@+id/btn"/>
+		android:id="@+id/btn"
+		android:layout_weight="1.0"/>
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:visibility="gone"
+		android:id="@+id/txt_parent"
+		android:layout_weight="1.0">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Text"
+			android:id="@+id/txt"/>
+
+	</ScrollView>
+
+	<Switch
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/switch_btn"/>
 
 </LinearLayout>
 
