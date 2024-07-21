@@ -24,6 +24,7 @@ public class MainActivity extends Activity {
     Button btn;
     TextView txt;
     Button clearBtn;
+    CompoundButton switchBtn;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class MainActivity extends Activity {
         boolean recieveApk = Intent.ACTION_VIEW.equals(intent.getAction());
         final ViewGroup btnParent = findViewById(R.id.btn_parent);
         final ViewGroup txtParent = findViewById(R.id.txt_parent);
-        final CompoundButton switchBtn = findViewById(R.id.switch_btn);
+        switchBtn = findViewById(R.id.switch_btn);
         btn = findViewById(R.id.btn);
         txt = findViewById(R.id.txt);
         clearBtn = findViewById(R.id.clear_btn);
@@ -61,7 +62,7 @@ public class MainActivity extends Activity {
         });
     }
     
-    void populateViewsByPackageName(String packageName){
+    void populateViewsByPackageName(final String packageName){
         final SharedPreferences sp = getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
         final String COUNT_HISTORY_KEY = packageName + ":count_history";
         final String LATEST_COUNT_KEY = packageName + ":latest_count";
@@ -105,7 +106,8 @@ public class MainActivity extends Activity {
                     sp.edit().putString(LATEST_COUNT_KEY, "").apply();
                     sp.edit().putString(COUNT_HISTORY_KEY, "").apply();
                     Toast.makeText(mContext, "successfully cleared history", Toast.LENGTH_LONG).show();
-                    finish();
+                    populateViewsByPackageName(packageName);
+                    switchBtn.setChecked(false);//set all back to default
                 }
             });
     }
