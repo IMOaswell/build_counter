@@ -97,7 +97,6 @@ public class PackagePickerActivity extends Activity {
     }
     
     void importStringToSharedPref(SharedPreferences sp, String input){
-        sp.edit().clear().apply();
         String[] packageNamesWithLogs = input.split("@");
         for(String string : packageNamesWithLogs){
             if(string.isEmpty()) continue;
