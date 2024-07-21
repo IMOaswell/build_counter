@@ -99,7 +99,7 @@ public class MainActivity extends Activity {
 
                     sp.edit().putString(LATEST_COUNT_KEY, recordString).apply();
                     sp.edit().putString(COUNT_HISTORY_KEY, sp.getString(COUNT_HISTORY_KEY, "") + "\n" + recordString).apply();
-                    Utils.installApk(mContext, apkUri);
+                    if(apkUri != null) Utils.installApk(mContext, apkUri);
                     finish();
                 }
             });
