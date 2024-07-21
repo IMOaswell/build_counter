@@ -82,19 +82,14 @@ public class MainActivity extends Activity {
             }
         });
         
-        final String switchOff = "BUTTON";
-        final String switchOn = "TEXT";
-        switchBtn.setText(switchOff);
         switchBtn.setOnCheckedChangeListener(new OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton switchBtn, boolean isChecked){
                 if(isChecked){
-                    switchBtn.setText(switchOn);
                     btnParent.setVisibility(View.GONE);
                     txtParent.setVisibility(View.VISIBLE);
                 }
                 else{
-                    switchBtn.setText(switchOff);
                     btnParent.setVisibility(View.VISIBLE);
                     txtParent.setVisibility(View.GONE);
                 }
