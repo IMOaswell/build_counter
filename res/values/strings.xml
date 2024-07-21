@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Build Counter</string>
+    <string name="record_count_success">successfully recorded. come back again to record another</string>
+    <string name="clear_history_success">successfully cleared history</string>
+    
 </resources>

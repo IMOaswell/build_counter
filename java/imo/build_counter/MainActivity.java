@@ -101,8 +101,8 @@ public class MainActivity extends Activity {
 
                     sp.edit().putString(LATEST_COUNT_KEY, recordString).apply();
                     sp.edit().putString(COUNT_HISTORY_KEY, sp.getString(COUNT_HISTORY_KEY, "") + "\n" + recordString).apply();
-                    //TODO: use R.string for the toast
-                    Toast.makeText(mContext, "successfully recorded. come back again to record another", Toast.LENGTH_LONG).show();
+                    
+                    Toast.makeText(mContext, R.string.record_count_success, Toast.LENGTH_LONG).show();
                     if(apkUri != null) Utils.installApk(mContext, apkUri);
                     btn.setEnabled(false);
                     btn.setAlpha(0.5f);
@@ -114,8 +114,8 @@ public class MainActivity extends Activity {
                 public void onClick(View v) {
                     sp.edit().putString(LATEST_COUNT_KEY, "").apply();
                     sp.edit().putString(COUNT_HISTORY_KEY, "").apply();
-                    //TODO: use R.string for the toast
-                    Toast.makeText(mContext, "successfully cleared history", Toast.LENGTH_LONG).show();
+                    
+                    Toast.makeText(mContext, R.string.clear_history_success, Toast.LENGTH_LONG).show();
                     populateViewsByPackageName(packageName);
                     switchBtn.setChecked(false);//set all back to default
                 }
