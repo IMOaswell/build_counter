@@ -25,9 +25,9 @@
 			android:text="@string/app_name"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:textSize="40sp"
 			android:textColor="@color/tertiary"
-			android:id="@+id/btn"/>
+			android:id="@+id/btn"
+			android:textSize="100sp"/>
 
 	</LinearLayout>
 
@@ -54,7 +54,8 @@
 		android:textOff="BUTTON"
 		android:textOn="HISTORY"
 		android:layout_marginLeft="25dp"
-		android:layout_marginRight="25dp"/>
+		android:layout_marginRight="25dp"
+		android:textColor="@color/text_color"/>
 
 </LinearLayout>
 
