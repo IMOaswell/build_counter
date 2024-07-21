@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,7 +25,8 @@ public class MainActivity extends Activity {
     Button recordBtn;
     TextView historyTxt;
     Button clearHistoryBtn;
-    CompoundButton switchTabBtn;
+    Button switchTabBtn;
+    boolean isViewHistoryTab = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,19 +52,26 @@ public class MainActivity extends Activity {
             if(packageName == null) return;
         }
         populateViewsByPackageName(packageName);
-
-        switchTabBtn.setOnCheckedChangeListener(new OnCheckedChangeListener(){
-                @Override
-                public void onCheckedChanged(CompoundButton switchBtn, boolean isChecked) {
-                    if(isChecked) {
+        
+        switchTabBtn.setText("VIEW HISTORY");
+        switchTabBtn.setPaintFlags(switchTabBtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        switchTabBtn.setOnClickListener(new OnClickListener(){
+                @Override 
+                public void onClick(View v) {
+                    if(isViewHistoryTab) {
+                        isViewHistoryTab = false;
+                        switchTabBtn.setText("VIEW HISTORY");
+                        recordBtnParent.setVisibility(View.VISIBLE);
+                        historyTxtParent.setVisibility(View.GONE);
+                        
+                    } else {
+                        isViewHistoryTab = true;
+                        switchTabBtn.setText("BACK");
                         recordBtnParent.setVisibility(View.GONE);
                         historyTxtParent.setVisibility(View.VISIBLE);
 
                         String txtString = historyTxt.getText().toString();
                         clearHistoryBtn.setVisibility(txtString.isEmpty() ? View.GONE : View.VISIBLE);
-                    } else {
-                        recordBtnParent.setVisibility(View.VISIBLE);
-                        historyTxtParent.setVisibility(View.GONE);
                     }
                 }
             });
@@ -117,7 +126,7 @@ public class MainActivity extends Activity {
                     
                     Toast.makeText(mContext, R.string.clear_history_success, Toast.LENGTH_LONG).show();
                     populateViewsByPackageName(packageName);
-                    switchTabBtn.setChecked(false);//set all back to default
+                    switchTabBtn.performClick();// switch back to the other tab
                 }
             });
     }
