@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
         populateViewsByPackageName(packageName);
         
         switchTabBtn.setText("VIEW HISTORY");
-        switchTabBtn.setPaintFlags(switchTabBtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        switchTabBtn = Utils.underline(switchTabBtn);
         switchTabBtn.setOnClickListener(new OnClickListener(){
                 @Override 
                 public void onClick(View v) {
@@ -118,7 +118,7 @@ public class MainActivity extends Activity {
                 }
             });
 
-        clearHistoryBtn.setPaintFlags(switchTabBtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        clearHistoryBtn = Utils.underline(clearHistoryBtn);
         clearHistoryBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {

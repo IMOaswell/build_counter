@@ -59,7 +59,7 @@ public class PackagePickerActivity extends Activity {
         final File buildCounterTxt = new File(Utils.INTERNAL_STORAGE, "AppProjects/build_counter.txt");
         
         Button exportBtn = findViewById(R.id.export_btn);
-        exportBtn.setPaintFlags(exportBtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        exportBtn = Utils.underline(exportBtn);
         exportBtn.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v){
@@ -71,7 +71,7 @@ public class PackagePickerActivity extends Activity {
         });
         
         Button importBtn = findViewById(R.id.import_btn);
-        importBtn.setPaintFlags(importBtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        importBtn = Utils.underline(importBtn);
         importBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v){

@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Environment;
+import android.widget.Button;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -103,5 +105,10 @@ public class Utils {
             reader.close();
         }catch(IOException e){}
         return content.toString().trim();
+    }
+    
+    static Button underline(Button btn){
+        btn.setPaintFlags(btn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        return btn;
     }
 }
