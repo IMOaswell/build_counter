@@ -26,7 +26,8 @@
 			android:layout_height="wrap_content"
 			android:text="Current Count:"
 			android:textAppearance="?android:attr/textAppearanceLarge"
-			android:layout_centerHorizontal="true"/>
+			android:layout_centerHorizontal="true"
+			android:padding="10dp"/>
 
 	</RelativeLayout>
 
@@ -37,55 +38,54 @@
 		android:id="@+id/history_txt_parent"
 		android:layout_weight="1.0">
 
-		<LinearLayout
+		<RelativeLayout
 			android:orientation="vertical"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center_horizontal">
+			android:layout_height="wrap_content">
 
-			<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="match_parent"
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:text="History: "
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:gravity="center_vertical"
+				android:layout_weight="1.0"
+				android:id="@+id/history_label_txt"
+				android:padding="10dp"
+				android:layout_centerHorizontal="true"/>
+
+			<Button
+				style="?android:attr/buttonBarButtonStyle"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:paddingLeft="20dp"
-				android:paddingRight="20dp">
-
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:text="History: "
-					android:textAppearance="?android:attr/textAppearanceLarge"
-					android:gravity="center_vertical"
-					android:layout_weight="1.0"/>
-
-				<Button
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:text="CLEAR"
-					android:id="@+id/history_clear_btn"
-					android:textColor="@color/text_color"
-					android:textAppearance="?android:attr/textAppearanceMedium"
-					android:layout_alignParentRight="true"/>
-
-			</LinearLayout>
+				android:text="CLEAR"
+				android:id="@+id/history_clear_btn"
+				android:textColor="@color/text_color"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_alignParentRight="true"
+				android:layout_alignTop="@id/history_label_txt"
+				android:layout_alignBottom="@id/history_label_txt"/>
 
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Text"
-				android:id="@+id/history_txt"/>
+				android:id="@+id/history_txt"
+				android:layout_centerHorizontal="true"
+				android:layout_below="@id/history_label_txt"/>
 
-		</LinearLayout>
+		</RelativeLayout>
 
 	</ScrollView>
-    
-    <Button
-        style="?android:attr/buttonBarButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/switch_tab_btn"
-        android:textColor="@color/text_color"
-        android:layout_centerHorizontal="true"
+
+	<Button
+		style="?android:attr/buttonBarButtonStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/switch_tab_btn"
+		android:textColor="@color/text_color"
+		android:layout_centerHorizontal="true"
 		android:layout_alignParentBottom="true"/>
+
 </RelativeLayout>
 

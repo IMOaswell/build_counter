@@ -118,6 +118,7 @@ public class MainActivity extends Activity {
                 }
             });
 
+        clearHistoryBtn.setPaintFlags(switchTabBtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         clearHistoryBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {
