@@ -1,5 +1,5 @@
 package imo.build_counter;
- 
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
     TextView txt;
     Button clearBtn;
     CompoundButton switchBtn;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
         Intent intent = getIntent();
         apkUri = getIntent().getData();
         boolean recieveApk = Intent.ACTION_VIEW.equals(intent.getAction());
-        
+
         //TODO: better ids
         final ViewGroup btnParent = findViewById(R.id.btn_parent);
         final ViewGroup txtParent = findViewById(R.id.txt_parent);
@@ -42,35 +42,34 @@ public class MainActivity extends Activity {
         btn = findViewById(R.id.btn);
         txt = findViewById(R.id.txt);
         clearBtn = findViewById(R.id.clear_btn);
-        
+
         String packageName = "";
         if(recieveApk) packageName = Utils.getApkPackageName(this, apkUri);
-        if(!recieveApk){
+        if(!recieveApk) {
             //check if theres a sent package name string
             packageName = intent.getStringExtra("packageName");
             if(packageName == null) return;
         }
         populateViewsByPackageName(packageName);
-        
+
         switchBtn.setOnCheckedChangeListener(new OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(CompoundButton switchBtn, boolean isChecked){
-                if(isChecked){
-                    btnParent.setVisibility(View.GONE);
-                    txtParent.setVisibility(View.VISIBLE);
-                    
-                    String txtString = txt.getText().toString();
-                    clearBtn.setVisibility(txtString.isEmpty() ? View.GONE : View.VISIBLE);
+                @Override
+                public void onCheckedChanged(CompoundButton switchBtn, boolean isChecked) {
+                    if(isChecked) {
+                        btnParent.setVisibility(View.GONE);
+                        txtParent.setVisibility(View.VISIBLE);
+
+                        String txtString = txt.getText().toString();
+                        clearBtn.setVisibility(txtString.isEmpty() ? View.GONE : View.VISIBLE);
+                    } else {
+                        btnParent.setVisibility(View.VISIBLE);
+                        txtParent.setVisibility(View.GONE);
+                    }
                 }
-                else{
-                    btnParent.setVisibility(View.VISIBLE);
-                    txtParent.setVisibility(View.GONE);
-                }
-            }
-        });
+            });
     }
-    
-    void populateViewsByPackageName(final String packageName){
+
+    void populateViewsByPackageName(final String packageName) {
         final SharedPreferences sp = getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
         final String COUNT_HISTORY_KEY = packageName + ":count_history";
         final String LATEST_COUNT_KEY = packageName + ":latest_count";
@@ -86,9 +85,9 @@ public class MainActivity extends Activity {
         btn.setText(build_count + "");
         txt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
 
-        btn.setOnClickListener( new OnClickListener(){
+        btn.setOnClickListener(new OnClickListener(){
                 @Override
-                public void onClick(View v){
+                public void onClick(View v) {
                     build_count++;
 
                     Button btn = (Button) v;
@@ -109,10 +108,10 @@ public class MainActivity extends Activity {
                     btn.setAlpha(0.5f);
                 }
             });
-            
+
         clearBtn.setOnClickListener(new OnClickListener(){
                 @Override
-                public void onClick(View v){
+                public void onClick(View v) {
                     sp.edit().putString(LATEST_COUNT_KEY, "").apply();
                     sp.edit().putString(COUNT_HISTORY_KEY, "").apply();
                     //TODO: use R.string for the toast

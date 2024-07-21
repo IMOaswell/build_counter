@@ -15,29 +15,29 @@ import java.io.OutputStream;
 
 public class Utils {
     static String INTERNAL_STORAGE = Environment.getExternalStorageDirectory().getPath();
-    
-    static String getApkPackageName(Context mContext,Uri apkUri){
+
+    static String getApkPackageName(Context mContext, Uri apkUri) {
         String filePath = getFilePathFromUri(mContext, apkUri);
         PackageManager pm = mContext.getPackageManager();
         PackageInfo packageInfo = pm.getPackageArchiveInfo(filePath, 0);
         return packageInfo.packageName;
     }
 
-    static String getFilePathFromUri(Context mContext,Uri apkUri){
+    static String getFilePathFromUri(Context mContext, Uri apkUri) {
         String filePath = null;
-        if("file".equals(apkUri.getScheme())){
+        if("file".equals(apkUri.getScheme())) {
             filePath = apkUri.getPath();
-        }else if("content".equals(apkUri.getScheme())){
-            try{
+        } else if("content".equals(apkUri.getScheme())) {
+            try {
                 filePath = copyToTempFile(mContext, apkUri).getAbsolutePath();
-            }catch(Exception e){}
+            } catch(Exception e) {}
         }
         return filePath;
     }
 
-    private static File copyToTempFile(Context mContext,Uri uri) throws Exception{
+    private static File copyToTempFile(Context mContext, Uri uri) throws Exception {
         InputStream inputStream = mContext.getContentResolver().openInputStream(uri);
-        if(inputStream == null){
+        if(inputStream == null) {
             throw new Exception("Failed to open input stream from URI");
         }
 
@@ -46,7 +46,7 @@ public class Utils {
 
         byte[] buffer = new byte[4096];
         int length;
-        while((length = inputStream.read(buffer)) > 0){
+        while((length = inputStream.read(buffer)) > 0) {
             outputStream.write(buffer, 0, length);
         }
 
@@ -56,23 +56,23 @@ public class Utils {
         return tempFile;
     }
 
-    static void installApk(Context mContext, Uri apkUri){
+    static void installApk(Context mContext, Uri apkUri) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         mContext.startActivity(intent);
     }
 
-    static String getCurrentDate(Calendar calendar){
+    static String getCurrentDate(Calendar calendar) {
         //will return e.g 2024-MAY-19
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MMM-dd");
         return dateFormat.format(calendar.getTime());
     }
 
-    static String getCurrentTime(Calendar calendar){
+    static String getCurrentTime(Calendar calendar) {
         //will return e.g 01:39pm
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mma");
         return dateFormat.format(calendar.getTime());
     }
-    
+
 }
