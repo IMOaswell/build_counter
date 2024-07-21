@@ -90,9 +90,6 @@ public class MainActivity extends Activity {
                 public void onClick(View v) {
                     build_count++;
 
-                    Button btn = (Button) v;
-                    btn.setText(build_count + "");
-
                     Calendar cal = Calendar.getInstance();
                     String recordString = 
                         build_count + " " + 
@@ -102,10 +99,15 @@ public class MainActivity extends Activity {
                     sp.edit().putString(LATEST_COUNT_KEY, recordString).apply();
                     sp.edit().putString(COUNT_HISTORY_KEY, sp.getString(COUNT_HISTORY_KEY, "") + "\n" + recordString).apply();
                     
-                    Toast.makeText(mContext, R.string.record_count_success, Toast.LENGTH_LONG).show();
-                    if(apkUri != null) Utils.installApk(mContext, apkUri);
+                    btn.setText(build_count + "");
+                    txt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
                     btn.setEnabled(false);
                     btn.setAlpha(0.5f);
+                    
+                    
+                    Toast.makeText(mContext, R.string.record_count_success, Toast.LENGTH_LONG).show();
+                    if(apkUri != null) Utils.installApk(mContext, apkUri);
+                    
                 }
             });
 
