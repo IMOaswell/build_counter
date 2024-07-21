@@ -70,13 +70,11 @@
 
 			</LinearLayout>
 
-			<EditText
+			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Text"
-				android:id="@+id/history_txt"
-				android:background="#00FFFFFF"
-				android:textColor="@color/text_color"/>
+				android:id="@+id/history_txt"/>
 
 		</LinearLayout>
 
