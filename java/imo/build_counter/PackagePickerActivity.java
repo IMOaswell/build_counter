@@ -54,17 +54,28 @@ public class PackagePickerActivity extends Activity {
                 }
             });
 
+            
+        final File buildCounterTxt = new File(Utils.INTERNAL_STORAGE, "AppProjects/build_counter.txt");
         Button exportBtn = findViewById(R.id.export_btn);
         exportBtn.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v){
-                File buildCounterTxt = new File(Utils.INTERNAL_STORAGE, "AppProjects/build_counter.txt");
                 String fileContent = genBuildCounterTxtString(sp);
                 
                 Utils.write(buildCounterTxt, fileContent);
                 Toast.makeText(mContext, "file saved at:\n" + buildCounterTxt.getPath(), Toast.LENGTH_LONG).show();
             }
         });
+        
+        Button importBtn = findViewById(R.id.import_btn);
+        importBtn.setOnClickListener(new OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    String fileContent = Utils.read(buildCounterTxt.getPath());
+                    importStringToSharedPref(sp, fileContent);
+                    Toast.makeText(mContext, "imported datas", Toast.LENGTH_LONG).show();
+                }
+            });
     }
     
     String genBuildCounterTxtString(SharedPreferences sp){
@@ -83,5 +94,25 @@ public class PackagePickerActivity extends Activity {
             sb.append(sp.getString(COUNT_HISTORY_KEY, "").trim());
         }
         return sb.toString();
+    }
+    
+    void importStringToSharedPref(SharedPreferences sp, String input){
+        sp.edit().clear().apply();
+        String[] packageNamesWithLogs = input.split("@");
+        for(String string : packageNamesWithLogs){
+            if(string.isEmpty()) continue;
+            String[] stringParts = string.split("\n", 2);
+            
+            String packageName = stringParts[0];
+            final String COUNT_HISTORY_KEY = packageName + ":count_history";
+            final String LATEST_COUNT_KEY = packageName + ":latest_count";
+            
+            String logsRaw = stringParts[1];
+            String[] logs = logsRaw.split("\n");
+            String lastLog = logs[logs.length - 1];
+            
+            sp.edit().putString(COUNT_HISTORY_KEY, logsRaw).apply();
+            sp.edit().putString(LATEST_COUNT_KEY, lastLog).apply();
+        }
     }
 }

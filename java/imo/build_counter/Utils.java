@@ -8,8 +8,10 @@ import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Environment;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -86,5 +88,20 @@ public class Utils {
                 fw.close();
             }
         }catch(IOException e){}
+    }
+    
+    static String read(String filePath){
+        StringBuilder content = new StringBuilder();
+
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            String line;
+
+            while((line = reader.readLine()) != null){
+                content.append(line).append("\n");
+            }
+            reader.close();
+        }catch(IOException e){}
+        return content.toString().trim();
     }
 }
