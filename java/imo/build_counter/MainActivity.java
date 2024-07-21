@@ -89,7 +89,6 @@ public class MainActivity extends Activity {
 
                     Button btn = (Button) v;
                     btn.setText(build_count + "");
-                    btn.setEnabled(false);
 
                     Calendar cal = Calendar.getInstance();
                     String recordString = 
@@ -100,7 +99,8 @@ public class MainActivity extends Activity {
                     sp.edit().putString(LATEST_COUNT_KEY, recordString).apply();
                     sp.edit().putString(COUNT_HISTORY_KEY, sp.getString(COUNT_HISTORY_KEY, "") + "\n" + recordString).apply();
                     if(apkUri != null) Utils.installApk(mContext, apkUri);
-                    finish();
+                    btn.setEnabled(false);
+                    btn.setAlpha(0.5f);
                 }
             });
             
