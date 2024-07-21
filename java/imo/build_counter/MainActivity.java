@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
         build_count = Integer.parseInt(count.trim());
 
         setTitle(apkPackageName);
-        btn.setText(build_count);
+        btn.setText(build_count + "");
         txt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
         
         
@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
                 build_count++;
                 
                 Button btn = (Button) v;
-                btn.setText(build_count);
+                btn.setText(build_count + "");
                 btn.setEnabled(false);
                 
                 Calendar cal = Calendar.getInstance();
