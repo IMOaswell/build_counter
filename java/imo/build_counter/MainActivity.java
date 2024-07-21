@@ -57,6 +57,9 @@ public class MainActivity extends Activity {
                 if(isChecked){
                     btnParent.setVisibility(View.GONE);
                     txtParent.setVisibility(View.VISIBLE);
+                    
+                    String txtString = txt.getText().toString();
+                    clearBtn.setVisibility(txtString.isEmpty() ? View.GONE : View.VISIBLE);
                 }
                 else{
                     btnParent.setVisibility(View.VISIBLE);
