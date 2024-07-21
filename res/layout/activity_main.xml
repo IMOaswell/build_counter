@@ -47,11 +47,10 @@
 
 	</ScrollView>
 
-	<Switch
+	<ToggleButton
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:id="@+id/switch_btn"
-		android:textColor="@color/text_color"/>
+		android:id="@+id/switch_btn"/>
 
 </LinearLayout>
 
