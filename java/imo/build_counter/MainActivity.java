@@ -35,8 +35,9 @@ public class MainActivity extends Activity {
         final Intent intent = getIntent();
         final Uri apkUri = intent.getData();
         boolean recieveApk = Intent.ACTION_VIEW.equals(intent.getAction());
-        final Button btn = findViewById(R.id.btn);
+        final ViewGroup btnParent = findViewById(R.id.btn_parent);
         final ViewGroup txtParent = findViewById(R.id.txt_parent);
+        final Button btn = findViewById(R.id.btn);
         final TextView txt = findViewById(R.id.txt);
         final CompoundButton switchBtn = findViewById(R.id.switch_btn);
         
@@ -55,10 +56,6 @@ public class MainActivity extends Activity {
         build_count = Integer.parseInt(count.trim());
 
         btn.setText(apkPackageName + "\n" + build_count);
-        btn.append("\n\n\n\n");
-        if(dateAndTime.isEmpty()) btn.append("start counting now:D");
-        if(!dateAndTime.isEmpty()) btn.append("last count: " + dateAndTime);
-        
         txt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
         
         
@@ -92,12 +89,12 @@ public class MainActivity extends Activity {
             public void onCheckedChanged(CompoundButton switchBtn, boolean isChecked){
                 if(isChecked){
                     switchBtn.setText(switchOn);
-                    btn.setVisibility(View.GONE);
+                    btnParent.setVisibility(View.GONE);
                     txtParent.setVisibility(View.VISIBLE);
                 }
                 else{
                     switchBtn.setText(switchOff);
-                    btn.setVisibility(View.VISIBLE);
+                    btnParent.setVisibility(View.VISIBLE);
                     txtParent.setVisibility(View.GONE);
                 }
             }
