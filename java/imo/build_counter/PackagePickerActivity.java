@@ -7,20 +7,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import android.view.View.OnClickListener;
+import java.io.File;
+import android.widget.Toast;
+import android.content.Context;
 
 public class PackagePickerActivity extends Activity {
-
+    Context mContext;
     String SHARED_PREFS_KEY = MainActivity.SHARED_PREFS_KEY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_package_picker);
+        mContext = this;
         final SharedPreferences sp = getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
         List<String> spKeys = new ArrayList<>(sp.getAll().keySet());
         Set<String> packageNames = new HashSet<String>();
@@ -47,6 +53,35 @@ public class PackagePickerActivity extends Activity {
                     startActivity(intent);
                 }
             });
-    }
 
+        Button exportBtn = findViewById(R.id.export_btn);
+        exportBtn.setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View v){
+                File buildCounterTxt = new File(Utils.INTERNAL_STORAGE, "AppProjects/build_counter.txt");
+                String fileContent = genBuildCounterTxtString(sp);
+                
+                Utils.write(buildCounterTxt, fileContent);
+                Toast.makeText(mContext, "file saved at:\n" + buildCounterTxt.getPath(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+    
+    String genBuildCounterTxtString(SharedPreferences sp){
+        StringBuilder sb = new StringBuilder();
+        
+        List<String> spKeys = new ArrayList<>(sp.getAll().keySet());
+        Set<String> packageNames = new HashSet<String>();
+        for(String s : spKeys) {
+            String packageName = s.split(":")[0];
+            packageNames.add(packageName);
+        }
+        
+        for(String packageName : packageNames){
+            final String COUNT_HISTORY_KEY = packageName + ":count_history";
+            sb.append("\n@" + packageName + "\n");
+            sb.append(sp.getString(COUNT_HISTORY_KEY, "").trim());
+        }
+        return sb.toString();
+    }
 }

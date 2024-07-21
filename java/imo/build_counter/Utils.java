@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.Environment;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -74,5 +76,15 @@ public class Utils {
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mma");
         return dateFormat.format(calendar.getTime());
     }
-
+    
+    static void write(File file,String input){
+        try{
+            if(!file.exists()) file.createNewFile();
+            if(file.isFile()){
+                FileWriter fw = new FileWriter(file);
+                fw.write(input);
+                fw.close();
+            }
+        }catch(IOException e){}
+    }
 }
