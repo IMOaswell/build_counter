@@ -26,7 +26,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:textSize="40sp"
-            android:textColor="@color/tertiary"
+			android:textColor="@color/tertiary"
 			android:id="@+id/btn"/>
 
 	</LinearLayout>
@@ -42,7 +42,8 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="Text"
-			android:id="@+id/txt"/>
+			android:id="@+id/txt"
+			android:gravity="center_horizontal"/>
 
 	</ScrollView>
 
