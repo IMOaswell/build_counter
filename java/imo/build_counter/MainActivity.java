@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
         Intent intent = getIntent();
         apkUri = getIntent().getData();
         boolean recieveApk = Intent.ACTION_VIEW.equals(intent.getAction());
+        
         final ViewGroup btnParent = findViewById(R.id.btn_parent);
         final ViewGroup txtParent = findViewById(R.id.txt_parent);
         switchBtn = findViewById(R.id.switch_btn);
@@ -41,10 +42,13 @@ public class MainActivity extends Activity {
         txt = findViewById(R.id.txt);
         clearBtn = findViewById(R.id.clear_btn);
         
-        if(!recieveApk) return;
-        
         String packageName = "";
         if(recieveApk) packageName = Utils.getApkPackageName(this, apkUri);
+        if(!recieveApk){
+            //check if theres a sent package name string
+            packageName = intent.getStringExtra("packageName");
+            if(packageName == null) return;
+        }
         populateViewsByPackageName(packageName);
         
         switchBtn.setOnCheckedChangeListener(new OnCheckedChangeListener(){

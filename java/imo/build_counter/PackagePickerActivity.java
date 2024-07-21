@@ -46,7 +46,6 @@ public class PackagePickerActivity extends Activity {
                     Intent intent = new Intent(PackagePickerActivity.this, MainActivity.class);
                     intent.putExtra("packageName", packageName);
                     startActivity(intent);
-                    
                 }
             });
     }
