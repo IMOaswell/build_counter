@@ -38,9 +38,9 @@ public class MainActivity extends Activity {
         final SharedPreferences sp = getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
         final String apkPackageName = getApkPackageName(this, apkUri);
         
-        final String KEY = apkPackageName;
+        final String LATEST_COUNT_KEY = apkPackageName + ":latest_count";
         
-        String recordString = sp.getString(KEY, "0 ");
+        String recordString = sp.getString(LATEST_COUNT_KEY, "0 ");
         String[] recordStringParts = recordString.split(" ", 2);
         String count = recordStringParts[0];
         String dateAndTime = recordStringParts[1];
@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
                     getCurrentDate(cal) + " " + 
                     getCurrentTime(cal);
                 
-                sp.edit().putString(KEY, recordString).apply();
+                sp.edit().putString(LATEST_COUNT_KEY, recordString).apply();
                 installApk(apkUri);
                 finish();
             }
