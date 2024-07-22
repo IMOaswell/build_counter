@@ -43,12 +43,10 @@ public class MainActivity extends Activity {
 
         String packageName = "";
         if(recieveApk) packageName = Utils.getApkPackageName(this, apkUri);
-        if(!recieveApk) {
-            //check if theres a sent package name string
-            packageName = intent.getStringExtra("packageName");
-            if(packageName == null) return;
-        }
-        initByPackageName(packageName);
+        if(!recieveApk) packageName = intent.getStringExtra("packageName");
+        if(packageName == null) return;
+        
+        init(packageName);
 
         switchTabBtn.setText("VIEW HISTORY");
         switchTabBtn = Utils.underline(switchTabBtn);
@@ -74,7 +72,7 @@ public class MainActivity extends Activity {
             });
     }
 
-    void initByPackageName(final String packageName) {
+    void init(final String packageName) {
         final SharedPreferences sp = getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
         final String COUNT_HISTORY_KEY = packageName + ":count_history";
         final String LATEST_COUNT_KEY = packageName + ":latest_count";
@@ -123,7 +121,7 @@ public class MainActivity extends Activity {
                     sp.edit().putString(COUNT_HISTORY_KEY, "").apply();
 
                     Toast.makeText(mContext, R.string.clear_history_success, Toast.LENGTH_LONG).show();
-                    initByPackageName(packageName);
+                    init(packageName);
                     switchTabBtn.performClick();// switch back to the other tab
                 }
             });
