@@ -98,7 +98,7 @@ public class MainActivity extends Activity {
 
         setTitle(packageName);
         recordBtn.setText(build_count + "");
-        historyTxt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
+        historyTxt.setText(sp.getString(COUNT_HISTORY_KEY, ""));
         
         if(recordBtn.isEnabled()) recordBtnHint.setText(R.string.record_btn_hint);
 
@@ -116,7 +116,7 @@ public class MainActivity extends Activity {
                     sp.edit().putString(LATEST_COUNT_KEY, recordString).apply();
                     sp.edit().putString(COUNT_HISTORY_KEY, sp.getString(COUNT_HISTORY_KEY, "").trim() + "\n" + recordString).apply();
                     
-                    historyTxt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
+                    historyTxt.setText(sp.getString(COUNT_HISTORY_KEY, ""));
                     recordBtnHint.setText(getString(R.string.record_btn_clicked));
                     recordBtn.setText(build_count + "");
                     recordBtn.setEnabled(false);
