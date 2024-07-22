@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
                         recordBtnParent.setVisibility(View.GONE);
                         historyTxtParent.setVisibility(View.VISIBLE);
 
-                        String txtString = historyTxt.getText().toString();
+                        String txtString = historyTxt.getText().toString().trim();
                         clearHistoryBtn.setVisibility(txtString.isEmpty() ? View.GONE : View.VISIBLE);
                     }
                 }
@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
 
                     sp.edit().putString(LATEST_COUNT_KEY, recordString).apply();
                     sp.edit().putString(COUNT_HISTORY_KEY, sp.getString(COUNT_HISTORY_KEY, "").trim() + "\n" + recordString).apply();
-
+                    
                     historyTxt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
                     recordBtn.setText(build_count + "");
                     recordBtn.setEnabled(false);
