@@ -35,7 +35,7 @@
 			android:layout_height="wrap_content"
 			android:layout_alignParentBottom="true"
 			android:layout_centerHorizontal="true"
-			android:layout_marginBottom="175dp"
+			android:layout_marginBottom="225dp"
 			android:id="@+id/record_btn_hint"
 			android:alpha="0.5"/>
 

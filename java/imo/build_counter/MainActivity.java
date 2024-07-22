@@ -91,9 +91,11 @@ public class MainActivity extends Activity {
 
         String recordString = sp.getString(LATEST_COUNT_KEY, "");
         if(recordString.isEmpty()) recordString = "0 ";
+        
         String[] recordStringParts = recordString.split(" ", 2);
         String count = recordStringParts[0];
         String dateAndTime = recordStringParts[1];
+        
         build_count = Integer.parseInt(count.trim());
 
         setTitle(packageName);
