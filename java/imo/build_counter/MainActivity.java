@@ -98,7 +98,7 @@ public class MainActivity extends Activity {
 
         setTitle(packageName);
         recordBtn.setText(build_count + "");
-        recordBtnHint.setText(R.string.record_count_hint);
+        recordBtnHint.setText(R.string.record_btn_hint);
         historyTxt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
 
         recordBtn.setOnClickListener(new OnClickListener(){
@@ -116,14 +116,12 @@ public class MainActivity extends Activity {
                     sp.edit().putString(COUNT_HISTORY_KEY, sp.getString(COUNT_HISTORY_KEY, "").trim() + "\n" + recordString).apply();
                     
                     historyTxt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
+                    recordBtnHint.setText(getString(R.string.record_btn_clicked));
                     recordBtn.setText(build_count + "");
                     recordBtn.setEnabled(false);
                     recordBtn.setTextColor(Color.WHITE);
                     recordBtn.setAlpha(0.5f);
-
-                    Toast.makeText(mContext, R.string.record_count_success, Toast.LENGTH_LONG).show();
                     if(apkUri != null) Utils.installApk(mContext, apkUri);
-
                 }
             });
 
