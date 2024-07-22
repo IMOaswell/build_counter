@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,65 +54,65 @@ public class PackagePickerActivity extends Activity {
                 }
             });
 
-            
+
         final File buildCounterTxt = new File(Utils.INTERNAL_STORAGE, "AppProjects/build_counter.txt");
-        
+
         Button exportBtn = findViewById(R.id.export_btn);
         exportBtn = Utils.underline(exportBtn);
         exportBtn.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v){
-                String fileContent = genBuildCounterTxtString(sp);
-                
-                Utils.write(buildCounterTxt, fileContent);
-                Toast.makeText(mContext, getString(R.string.export_data_success) + buildCounterTxt.getPath(), Toast.LENGTH_LONG).show();
-            }
-        });
-        
+                @Override
+                public void onClick(View v) {
+                    String fileContent = genBuildCounterTxtString(sp);
+
+                    Utils.write(buildCounterTxt, fileContent);
+                    Toast.makeText(mContext, getString(R.string.export_data_success) + buildCounterTxt.getPath(), Toast.LENGTH_LONG).show();
+                }
+            });
+
         Button importBtn = findViewById(R.id.import_btn);
         importBtn = Utils.underline(importBtn);
         importBtn.setOnClickListener(new OnClickListener(){
                 @Override
-                public void onClick(View v){
+                public void onClick(View v) {
                     String fileContent = Utils.read(buildCounterTxt.getPath());
                     importStringToSharedPref(sp, fileContent);
                     Toast.makeText(mContext, getString(R.string.import_data_success) + buildCounterTxt.getPath(), Toast.LENGTH_LONG).show();
                 }
             });
     }
-    
-    String genBuildCounterTxtString(SharedPreferences sp){
+
+    String genBuildCounterTxtString(SharedPreferences sp) {
         StringBuilder sb = new StringBuilder();
-        
+
         List<String> spKeys = new ArrayList<>(sp.getAll().keySet());
         Set<String> packageNames = new HashSet<String>();
         for(String s : spKeys) {
             String packageName = s.split(":")[0];
             packageNames.add(packageName);
         }
-        
-        for(String packageName : packageNames){
+
+        for(String packageName : packageNames) {
             final String COUNT_HISTORY_KEY = packageName + ":count_history";
             sb.append("\n@" + packageName + "\n");
             sb.append(sp.getString(COUNT_HISTORY_KEY, "").trim());
         }
         return sb.toString();
     }
-    
-    void importStringToSharedPref(SharedPreferences sp, String input){
+
+    void importStringToSharedPref(SharedPreferences sp, String input) {
         String[] packageNamesWithLogs = input.split("@");
-        for(String string : packageNamesWithLogs){
+        for(String string : packageNamesWithLogs) {
             if(string.isEmpty()) continue;
             String[] stringParts = string.split("\n", 2);
-            
+
             String packageName = stringParts[0];
             final String COUNT_HISTORY_KEY = packageName + ":count_history";
             final String LATEST_COUNT_KEY = packageName + ":latest_count";
-            
+
             String logsRaw = stringParts[1];
             String[] logs = logsRaw.split("\n");
             String lastLog = logs.length > 0 ? logs[logs.length - 1] : "";
-            
+
             sp.edit().putString(COUNT_HISTORY_KEY, logsRaw).apply();
             sp.edit().putString(LATEST_COUNT_KEY, lastLog).apply();
         }

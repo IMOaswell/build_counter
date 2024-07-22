@@ -80,34 +80,34 @@ public class Utils {
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mma");
         return dateFormat.format(calendar.getTime());
     }
-    
-    static void write(File file,String input){
-        try{
+
+    static void write(File file, String input) {
+        try {
             if(!file.exists()) file.createNewFile();
-            if(file.isFile()){
+            if(file.isFile()) {
                 FileWriter fw = new FileWriter(file);
                 fw.write(input);
                 fw.close();
             }
-        }catch(IOException e){}
+        } catch(IOException e) {}
     }
-    
-    static String read(String filePath){
+
+    static String read(String filePath) {
         StringBuilder content = new StringBuilder();
 
-        try{
+        try {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
             String line;
 
-            while((line = reader.readLine()) != null){
+            while((line = reader.readLine()) != null) {
                 content.append(line).append("\n");
             }
             reader.close();
-        }catch(IOException e){}
+        } catch(IOException e) {}
         return content.toString().trim();
     }
-    
-    static Button underline(Button btn){
+
+    static Button underline(Button btn) {
         btn.setPaintFlags(btn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         return btn;
     }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Paint;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,8 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +49,7 @@ public class MainActivity extends Activity {
             if(packageName == null) return;
         }
         initByPackageName(packageName);
-        
+
         switchTabBtn.setText("VIEW HISTORY");
         switchTabBtn = Utils.underline(switchTabBtn);
         switchTabBtn.setOnClickListener(new OnClickListener(){
@@ -63,7 +60,7 @@ public class MainActivity extends Activity {
                         switchTabBtn.setText("VIEW HISTORY");
                         recordBtnParent.setVisibility(View.VISIBLE);
                         historyTxtParent.setVisibility(View.GONE);
-                        
+
                     } else {
                         isViewHistoryTab = true;
                         switchTabBtn.setText("BACK");
@@ -106,15 +103,15 @@ public class MainActivity extends Activity {
 
                     sp.edit().putString(LATEST_COUNT_KEY, recordString).apply();
                     sp.edit().putString(COUNT_HISTORY_KEY, sp.getString(COUNT_HISTORY_KEY, "").trim() + "\n" + recordString).apply();
-                    
+
                     recordBtn.setText(build_count + "");
                     historyTxt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
                     recordBtn.setEnabled(false);
                     recordBtn.setAlpha(0.5f);
-                    
+
                     Toast.makeText(mContext, R.string.record_count_success, Toast.LENGTH_LONG).show();
                     if(apkUri != null) Utils.installApk(mContext, apkUri);
-                    
+
                 }
             });
 
@@ -124,7 +121,7 @@ public class MainActivity extends Activity {
                 public void onClick(View v) {
                     sp.edit().putString(LATEST_COUNT_KEY, "").apply();
                     sp.edit().putString(COUNT_HISTORY_KEY, "").apply();
-                    
+
                     Toast.makeText(mContext, R.string.clear_history_success, Toast.LENGTH_LONG).show();
                     initByPackageName(packageName);
                     switchTabBtn.performClick();// switch back to the other tab
