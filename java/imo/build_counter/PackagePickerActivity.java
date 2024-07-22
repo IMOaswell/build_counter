@@ -66,7 +66,7 @@ public class PackagePickerActivity extends Activity {
                 String fileContent = genBuildCounterTxtString(sp);
                 
                 Utils.write(buildCounterTxt, fileContent);
-                Toast.makeText(mContext, "successfully exported data as file at:\n" + buildCounterTxt.getPath(), Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, getString(R.string.export_data_success) + buildCounterTxt.getPath(), Toast.LENGTH_LONG).show();
             }
         });
         
@@ -77,7 +77,7 @@ public class PackagePickerActivity extends Activity {
                 public void onClick(View v){
                     String fileContent = Utils.read(buildCounterTxt.getPath());
                     importStringToSharedPref(sp, fileContent);
-                    Toast.makeText(mContext, "successfully imported data from file:\n" + buildCounterTxt.getPath(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, getString(R.string.import_data_success) + buildCounterTxt.getPath(), Toast.LENGTH_LONG).show();
                 }
             });
     }
