@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.Color;
 
 public class MainActivity extends Activity {
     TextView recordBtnHint;
@@ -106,9 +107,10 @@ public class MainActivity extends Activity {
                     sp.edit().putString(LATEST_COUNT_KEY, recordString).apply();
                     sp.edit().putString(COUNT_HISTORY_KEY, sp.getString(COUNT_HISTORY_KEY, "").trim() + "\n" + recordString).apply();
 
-                    recordBtn.setText(build_count + "");
                     historyTxt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
+                    recordBtn.setText(build_count + "");
                     recordBtn.setEnabled(false);
+                    recordBtn.setTextColor(Color.WHITE);
                     recordBtn.setAlpha(0.5f);
 
                     Toast.makeText(mContext, R.string.record_count_success, Toast.LENGTH_LONG).show();
