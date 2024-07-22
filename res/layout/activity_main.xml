@@ -36,7 +36,8 @@
 			android:layout_alignParentBottom="true"
 			android:layout_centerHorizontal="true"
 			android:layout_marginBottom="175dp"
-			android:id="@+id/record_btn_hint"/>
+			android:id="@+id/record_btn_hint"
+			android:alpha="0.5"/>
 
 	</RelativeLayout>
 
@@ -86,15 +87,15 @@
 		</RelativeLayout>
 
 	</ScrollView>
-    
-    <Button
-        style="?android:attr/buttonBarButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/switch_tab_btn"
-        android:textColor="@color/text_color"
-        android:layout_centerHorizontal="true"
+
+	<Button
+		style="?android:attr/buttonBarButtonStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/switch_tab_btn"
+		android:textColor="@color/text_color"
+		android:layout_centerHorizontal="true"
 		android:layout_alignParentBottom="true"/>
-    
+
 </RelativeLayout>
 

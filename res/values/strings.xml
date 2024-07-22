@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Build Counter</string>
     <string name="record_count_success">successfully recorded. come back again to record another</string>
-    <string name="record_count_hint">click to increment this number:D\n(will log the date and time of when u click it)</string>
+    <string name="record_count_hint">click to increment this number:D\n(will log the date and time as well)</string>
     <string name="clear_history_success">successfully cleared history</string>
     <string name="export_data_success">successfully exported data as file at:\n</string>
     <string name="import_data_success">successfully imported data from file:\n</string>
