@@ -19,9 +19,9 @@ import java.util.List;
 import java.util.Set;
 
 public class PackagePickerActivity extends Activity {
+    String SHARED_PREFS_KEY = MainActivity.SHARED_PREFS_KEY;
     Context mContext;
     Bundle mBundle;
-    String SHARED_PREFS_KEY = MainActivity.SHARED_PREFS_KEY;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,22 +34,23 @@ public class PackagePickerActivity extends Activity {
         
         setContentView(R.layout.activity_package_picker);
         mContext = this;
+        
+        ListView listview = findViewById(R.id.listview);
+        Button exportBtn = findViewById(R.id.export_btn);
+        Button importBtn = findViewById(R.id.import_btn);
 
         final SharedPreferences sp = getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
         List<String> spKeys = new ArrayList<>(sp.getAll().keySet());
         Set<String> packageNames = new HashSet<String>();
-
+        
         for(String s : spKeys) {
             String packageName = s.split(":")[0];
             packageNames.add(packageName);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-            this, android.R.layout.simple_list_item_1, 
-            new ArrayList<String>(packageNames));
-
-        ListView listview = findViewById(R.id.listview);
-        listview.setAdapter(adapter);
+        listview.setAdapter(new ArrayAdapter<String>(
+                                this, android.R.layout.simple_list_item_1, 
+                                new ArrayList<String>(packageNames)));
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -64,7 +65,6 @@ public class PackagePickerActivity extends Activity {
 
         final File buildCounterTxt = new File(Utils.INTERNAL_STORAGE, "AppProjects/build_counter.txt");
 
-        Button exportBtn = findViewById(R.id.export_btn);
         exportBtn = Utils.underline(exportBtn);
         exportBtn.setOnClickListener(new OnClickListener(){
                 @Override
@@ -76,7 +76,6 @@ public class PackagePickerActivity extends Activity {
                 }
             });
 
-        Button importBtn = findViewById(R.id.import_btn);
         importBtn = Utils.underline(importBtn);
         importBtn.setOnClickListener(new OnClickListener(){
                 @Override
