@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
+    //TODO: rearrange variables
     Context mContext;
     static String SHARED_PREFS_KEY = "PACKAGE_NAMES";
     int build_count = 0;
@@ -23,6 +24,7 @@ public class MainActivity extends Activity {
     TextView historyTxt;
     Button clearHistoryBtn;
     Button switchTabBtn;
+    TextView recordBtnHint;
     boolean isViewHistoryTab = false;
 
     @Override
@@ -37,6 +39,7 @@ public class MainActivity extends Activity {
         final ViewGroup recordBtnParent = findViewById(R.id.record_btn_parent);
         final ViewGroup historyTxtParent = findViewById(R.id.history_txt_parent);
         switchTabBtn = findViewById(R.id.switch_tab_btn);
+        recordBtnHint = findViewById(R.id.record_btn_hint);
         recordBtn = findViewById(R.id.record_btn);
         historyTxt = findViewById(R.id.history_txt);
         clearHistoryBtn = findViewById(R.id.history_clear_btn);
@@ -86,6 +89,7 @@ public class MainActivity extends Activity {
 
         setTitle(packageName);
         recordBtn.setText(build_count + "");
+        recordBtnHint.setText(R.string.record_count_hint);
         historyTxt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
 
         recordBtn.setOnClickListener(new OnClickListener(){

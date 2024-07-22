@@ -27,7 +27,16 @@
 			android:text="Current Count:"
 			android:textAppearance="?android:attr/textAppearanceLarge"
 			android:layout_centerHorizontal="true"
-			android:padding="10dp"/>
+			android:padding="10dp"
+			android:id="@+id/activitymainTextView1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:layout_centerHorizontal="true"
+			android:layout_marginBottom="175dp"
+			android:id="@+id/record_btn_hint"/>
 
 	</RelativeLayout>
 
@@ -77,15 +86,15 @@
 		</RelativeLayout>
 
 	</ScrollView>
-
-	<Button
-		style="?android:attr/buttonBarButtonStyle"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:id="@+id/switch_tab_btn"
-		android:textColor="@color/text_color"
-		android:layout_centerHorizontal="true"
+    
+    <Button
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/switch_tab_btn"
+        android:textColor="@color/text_color"
+        android:layout_centerHorizontal="true"
 		android:layout_alignParentBottom="true"/>
-
+    
 </RelativeLayout>
 
