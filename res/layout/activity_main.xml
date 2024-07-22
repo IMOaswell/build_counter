@@ -19,7 +19,7 @@
 			android:layout_height="match_parent"
 			android:textColor="@color/tertiary"
 			android:id="@+id/record_btn"
-			android:textSize="100sp"/>
+			android:textSize="120sp"/>
 
 		<TextView
 			android:layout_width="wrap_content"
