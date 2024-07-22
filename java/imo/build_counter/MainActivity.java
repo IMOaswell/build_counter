@@ -40,11 +40,7 @@ public class MainActivity extends Activity {
         
         setContentView(R.layout.activity_main);
         mContext = this;
-
-        Intent intent = getIntent();
-        apkUri = getIntent().getData();
-        boolean recieveApk = Intent.ACTION_VIEW.equals(intent.getAction());
-
+        
         final ViewGroup recordBtnParent = findViewById(R.id.record_btn_parent);
         final ViewGroup historyTxtParent = findViewById(R.id.history_txt_parent);
         switchTabBtn = findViewById(R.id.switch_tab_btn);
@@ -52,6 +48,10 @@ public class MainActivity extends Activity {
         recordBtn = findViewById(R.id.record_btn);
         historyTxt = findViewById(R.id.history_txt);
         clearHistoryBtn = findViewById(R.id.history_clear_btn);
+        
+        Intent intent = getIntent();
+        apkUri = getIntent().getData();
+        boolean recieveApk = Intent.ACTION_VIEW.equals(intent.getAction());
 
         String packageName = "";
         if(recieveApk) packageName = Utils.getApkPackageName(this, apkUri);
