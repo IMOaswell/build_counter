@@ -98,8 +98,9 @@ public class MainActivity extends Activity {
 
         setTitle(packageName);
         recordBtn.setText(build_count + "");
-        recordBtnHint.setText(R.string.record_btn_hint);
         historyTxt.setText(sp.getString(COUNT_HISTORY_KEY, "no data yet"));
+        
+        if(recordBtn.isEnabled()) recordBtnHint.setText(R.string.record_btn_hint);
 
         recordBtn.setOnClickListener(new OnClickListener(){
                 @Override
