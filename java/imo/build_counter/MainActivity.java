@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.graphics.Color;
 
 public class MainActivity extends Activity {
     ViewGroup historyTxtParent;
@@ -103,7 +104,11 @@ public class MainActivity extends Activity {
                     recordBtn.setEnabled(false);
                     recordBtn.setTextColor(Color.WHITE);
                     recordBtn.setAlpha(0.5f);
-                    if(apkUri != null) Utils.installApk(mContext, apkUri);
+                    
+                    if(apkUri == null) return;
+                    PackageManager packageManager = mContext.getPackageManager();
+                    String installer = packageManager.getInstallerPackageName(packageName);
+                    Utils.installApk(mContext, apkUri, installer);
                 }
             });
 

@@ -68,10 +68,11 @@ public class Utils {
         return tempFile;
     }
 
-    static void installApk(Context mContext, Uri apkUri) {
+    static void installApk(Context mContext, Uri apkUri, String installer) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setPackage(installer);
         mContext.startActivity(intent);
     }
 
