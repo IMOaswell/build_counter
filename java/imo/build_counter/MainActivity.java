@@ -26,19 +26,18 @@ public class MainActivity extends Activity {
     boolean isViewHistoryTab = false;
     int build_count = 0;
     Context mContext;
+    Bundle mBundle;
     Uri apkUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(Utils.hasPermissions(this)){
-            onCreate();
+        if(mBundle == null) mBundle = savedInstanceState;
+        if(!Utils.hasPermissions(this)){
+            Utils.requestPermission(this);
             return;
         }
-        Utils.requestPermission(this);
-    }
-    
-    void onCreate(){
+        
         setContentView(R.layout.activity_main);
         mContext = this;
 
@@ -146,7 +145,7 @@ public class MainActivity extends Activity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(Utils.hasPermissions(this)) {
-            onCreate();
+            onCreate(mBundle);
             return;
         }
         finish();

@@ -20,19 +20,18 @@ import java.util.Set;
 
 public class PackagePickerActivity extends Activity {
     Context mContext;
+    Bundle mBundle;
     String SHARED_PREFS_KEY = MainActivity.SHARED_PREFS_KEY;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(Utils.hasPermissions(this)){
-            onCreate();
+        if(mBundle == null) mBundle = savedInstanceState;
+        if(!Utils.hasPermissions(this)){
+            Utils.requestPermission(this);
             return;
         }
-        Utils.requestPermission(this);
-    }
-    
-    void onCreate(){
+        
         setContentView(R.layout.activity_package_picker);
         mContext = this;
 
@@ -62,7 +61,7 @@ public class PackagePickerActivity extends Activity {
                     startActivity(intent);
                 }
             });
-        
+
         final File buildCounterTxt = new File(Utils.INTERNAL_STORAGE, "AppProjects/build_counter.txt");
 
         Button exportBtn = findViewById(R.id.export_btn);
@@ -88,7 +87,7 @@ public class PackagePickerActivity extends Activity {
                 }
             });
     }
-
+    
     String genBuildCounterTxtString(SharedPreferences sp) {
         StringBuilder sb = new StringBuilder();
 
@@ -130,7 +129,7 @@ public class PackagePickerActivity extends Activity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(Utils.hasPermissions(this)) {
-            onCreate();
+            onCreate(mBundle);
             return;
         }
         finish();
