@@ -15,17 +15,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-    //TODO: rearrange variables
-    Context mContext;
-    static String SHARED_PREFS_KEY = "PACKAGE_NAMES";
-    int build_count = 0;
-    Uri apkUri;
-    Button recordBtn;
+    TextView recordBtnHint;
     TextView historyTxt;
     Button clearHistoryBtn;
     Button switchTabBtn;
-    TextView recordBtnHint;
+    Button recordBtn;
+    
+    static String SHARED_PREFS_KEY = "PACKAGE_NAMES";
     boolean isViewHistoryTab = false;
+    int build_count = 0;
+    Context mContext;
+    Uri apkUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
