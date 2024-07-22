@@ -1,5 +1,7 @@
 package imo.build_counter;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -10,6 +12,8 @@ import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Environment;
 import android.widget.Button;
+import android.widget.Toast;
+import imo.build_counter.MainActivity;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -110,5 +114,18 @@ public class Utils {
     static Button underline(Button btn) {
         btn.setPaintFlags(btn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         return btn;
+    }
+    
+    static void requestPermission(Activity activity){
+        String[] permissions = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        
+        for(String permission : permissions){
+            if(activity.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED)
+                return;
+        }
+        
+        activity.requestPermissions(permissions, 69);
     }
 }

@@ -26,7 +26,9 @@ public class PackagePickerActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_package_picker);
+        Utils.requestPermission(this);
         mContext = this;
+        
         final SharedPreferences sp = getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
         List<String> spKeys = new ArrayList<>(sp.getAll().keySet());
         Set<String> packageNames = new HashSet<String>();
