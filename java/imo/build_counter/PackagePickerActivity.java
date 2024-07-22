@@ -35,22 +35,15 @@ public class PackagePickerActivity extends Activity {
         setContentView(R.layout.activity_package_picker);
         mContext = this;
         
-        ListView listview = findViewById(R.id.listview);
+        final ListView listview = findViewById(R.id.listview);
         Button exportBtn = findViewById(R.id.export_btn);
         Button importBtn = findViewById(R.id.import_btn);
 
         final SharedPreferences sp = getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
-        List<String> spKeys = new ArrayList<>(sp.getAll().keySet());
-        Set<String> packageNames = new HashSet<String>();
         
-        for(String s : spKeys) {
-            String packageName = s.split(":")[0];
-            packageNames.add(packageName);
-        }
-
         listview.setAdapter(new ArrayAdapter<String>(
-                                this, android.R.layout.simple_list_item_1, 
-                                new ArrayList<String>(packageNames)));
+                                mContext, android.R.layout.simple_list_item_1, 
+                                getPackageNames(sp)));
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -83,6 +76,11 @@ public class PackagePickerActivity extends Activity {
                     String fileContent = Utils.read(buildCounterTxt.getPath());
                     importStringToSharedPref(sp, fileContent);
                     Toast.makeText(mContext, getString(R.string.import_data_success) + buildCounterTxt.getPath(), Toast.LENGTH_LONG).show();
+                    
+                    listview.setAdapter(new ArrayAdapter<String>(
+                                            mContext, android.R.layout.simple_list_item_1, 
+                                            getPackageNames(sp)));
+                    listview.invalidate();
                 }
             });
     }
@@ -122,6 +120,17 @@ public class PackagePickerActivity extends Activity {
             sp.edit().putString(COUNT_HISTORY_KEY, logsRaw).apply();
             sp.edit().putString(LATEST_COUNT_KEY, lastLog).apply();
         }
+    }
+    
+    List<String> getPackageNames(SharedPreferences sp){
+        List<String> spKeys = new ArrayList<>(sp.getAll().keySet());
+        Set<String> packageNames = new HashSet<String>();
+
+        for(String s : spKeys) {
+            String packageName = s.split(":")[0];
+            packageNames.add(packageName);
+        }
+        return new ArrayList<String>(packageNames);
     }
     
     @Override
