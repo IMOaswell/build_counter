@@ -112,7 +112,7 @@ public class PackagePickerActivity extends Activity {
             
             String logsRaw = stringParts[1];
             String[] logs = logsRaw.split("\n");
-            String lastLog = logs[logs.length - 1];
+            String lastLog = logs.length > 0 ? logs[logs.length - 1] : "";
             
             sp.edit().putString(COUNT_HISTORY_KEY, logsRaw).apply();
             sp.edit().putString(LATEST_COUNT_KEY, lastLog).apply();
