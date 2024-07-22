@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.widget.Button;
 import android.widget.Toast;
-import imo.build_counter.MainActivity;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,6 +24,9 @@ import java.io.OutputStream;
 
 public class Utils {
     static String INTERNAL_STORAGE = Environment.getExternalStorageDirectory().getPath();
+    static final String[] permissions = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     static String getApkPackageName(Context mContext, Uri apkUri) {
         String filePath = getFilePathFromUri(mContext, apkUri);
@@ -117,15 +119,19 @@ public class Utils {
     }
     
     static void requestPermission(Activity activity){
-        String[] permissions = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        
         for(String permission : permissions){
             if(activity.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED)
                 return;
         }
         
         activity.requestPermissions(permissions, 69);
+    }
+    
+    static boolean hasPermissions(Activity activity){
+        for(String permission : permissions){
+            if(activity.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED)
+                return true;
+        }
+        return false;
     }
 }

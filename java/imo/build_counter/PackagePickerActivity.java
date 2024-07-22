@@ -25,10 +25,17 @@ public class PackagePickerActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_package_picker);
+        if(Utils.hasPermissions(this)){
+            onCreate();
+            return;
+        }
         Utils.requestPermission(this);
+    }
+    
+    void onCreate(){
+        setContentView(R.layout.activity_package_picker);
         mContext = this;
-        
+
         final SharedPreferences sp = getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
         List<String> spKeys = new ArrayList<>(sp.getAll().keySet());
         Set<String> packageNames = new HashSet<String>();
@@ -55,8 +62,7 @@ public class PackagePickerActivity extends Activity {
                     startActivity(intent);
                 }
             });
-
-
+        
         final File buildCounterTxt = new File(Utils.INTERNAL_STORAGE, "AppProjects/build_counter.txt");
 
         Button exportBtn = findViewById(R.id.export_btn);
@@ -118,5 +124,15 @@ public class PackagePickerActivity extends Activity {
             sp.edit().putString(COUNT_HISTORY_KEY, logsRaw).apply();
             sp.edit().putString(LATEST_COUNT_KEY, lastLog).apply();
         }
+    }
+    
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(Utils.hasPermissions(this)) {
+            onCreate();
+            return;
+        }
+        finish();
     }
 }

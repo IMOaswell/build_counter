@@ -31,10 +31,17 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        if(Utils.hasPermissions(this)){
+            onCreate();
+            return;
+        }
         Utils.requestPermission(this);
+    }
+    
+    void onCreate(){
+        setContentView(R.layout.activity_main);
         mContext = this;
-        
+
         Intent intent = getIntent();
         apkUri = getIntent().getData();
         boolean recieveApk = Intent.ACTION_VIEW.equals(intent.getAction());
@@ -51,7 +58,7 @@ public class MainActivity extends Activity {
         if(recieveApk) packageName = Utils.getApkPackageName(this, apkUri);
         if(!recieveApk) packageName = intent.getStringExtra("packageName");
         if(packageName == null) return;
-        
+
         init(packageName);
 
         switchTabBtn.setText("VIEW HISTORY");
@@ -133,5 +140,15 @@ public class MainActivity extends Activity {
                     switchTabBtn.performClick();// switch back to the other tab
                 }
             });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(Utils.hasPermissions(this)) {
+            onCreate();
+            return;
+        }
+        finish();
     }
 }
