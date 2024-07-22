@@ -16,6 +16,8 @@ import android.widget.Toast;
 import android.graphics.Color;
 
 public class MainActivity extends Activity {
+    ViewGroup historyTxtParent;
+    ViewGroup recordBtnParent;
     TextView recordBtnHint;
     TextView historyTxt;
     Button clearHistoryBtn;
@@ -41,8 +43,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         mContext = this;
         
-        final ViewGroup recordBtnParent = findViewById(R.id.record_btn_parent);
-        final ViewGroup historyTxtParent = findViewById(R.id.history_txt_parent);
+        recordBtnParent = findViewById(R.id.record_btn_parent);
+        historyTxtParent = findViewById(R.id.history_txt_parent);
         switchTabBtn = findViewById(R.id.switch_tab_btn);
         recordBtnHint = findViewById(R.id.record_btn_hint);
         recordBtn = findViewById(R.id.record_btn);
@@ -59,29 +61,6 @@ public class MainActivity extends Activity {
         if(packageName == null) return;
 
         init(packageName);
-
-        switchTabBtn.setText("VIEW HISTORY");
-        switchTabBtn = Utils.underline(switchTabBtn);
-        switchTabBtn.setOnClickListener(new OnClickListener(){
-                @Override 
-                public void onClick(View v) {
-                    if(isViewHistoryTab) {
-                        isViewHistoryTab = false;
-                        switchTabBtn.setText("VIEW HISTORY");
-                        recordBtnParent.setVisibility(View.VISIBLE);
-                        historyTxtParent.setVisibility(View.GONE);
-
-                    } else {
-                        isViewHistoryTab = true;
-                        switchTabBtn.setText("BACK");
-                        recordBtnParent.setVisibility(View.GONE);
-                        historyTxtParent.setVisibility(View.VISIBLE);
-
-                        String txtString = historyTxt.getText().toString().trim();
-                        clearHistoryBtn.setVisibility(txtString.isEmpty() ? View.GONE : View.VISIBLE);
-                    }
-                }
-            });
     }
 
     void init(final String packageName) {
@@ -138,6 +117,29 @@ public class MainActivity extends Activity {
                     Toast.makeText(mContext, R.string.clear_history_success, Toast.LENGTH_LONG).show();
                     init(packageName);
                     switchTabBtn.performClick();// switch back to the other tab
+                }
+            });
+            
+        switchTabBtn.setText("VIEW HISTORY");
+        switchTabBtn = Utils.underline(switchTabBtn);
+        switchTabBtn.setOnClickListener(new OnClickListener(){
+                @Override 
+                public void onClick(View v) {
+                    if(isViewHistoryTab) {
+                        isViewHistoryTab = false;
+                        switchTabBtn.setText("VIEW HISTORY");
+                        recordBtnParent.setVisibility(View.VISIBLE);
+                        historyTxtParent.setVisibility(View.GONE);
+
+                    } else {
+                        isViewHistoryTab = true;
+                        switchTabBtn.setText("BACK");
+                        recordBtnParent.setVisibility(View.GONE);
+                        historyTxtParent.setVisibility(View.VISIBLE);
+
+                        String txtString = historyTxt.getText().toString().trim();
+                        clearHistoryBtn.setVisibility(txtString.isEmpty() ? View.GONE : View.VISIBLE);
+                    }
                 }
             });
     }
