@@ -82,8 +82,11 @@ public class MainActivity extends Activity {
         recordBtn.setText(build_count + "");
         historyTxt.setText(sp.getString(COUNT_HISTORY_KEY, ""));
         
-        if(recordBtn.isEnabled()) recordBtnHint.setText(R.string.record_btn_hint);
-
+        if(recordBtn.isEnabled()){
+            recordBtnHint.setText(R.string.record_btn_hint);
+            if(apkUri != null) recordBtnHint.append(getString(R.string.record_btn_install_apk_hint));
+        }
+        
         recordBtn.setOnClickListener(new OnClickListener(){
                 @Override
                 public void onClick(View v) {

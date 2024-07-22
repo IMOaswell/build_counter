@@ -3,6 +3,7 @@
     <string name="app_name">Build Counter</string>
     <string name="record_btn_clicked">come back to increment again:D\n(logged date and time, see history)</string>
     <string name="record_btn_hint">click to increment this number:D\n(will log the date and time as well)</string>
+    <string name="record_btn_install_apk_hint">\n\nthis will also continue install the apk</string>
     <string name="clear_history_success">successfully cleared history</string>
     <string name="export_data_success">successfully exported data as file at:\n</string>
     <string name="import_data_success">successfully imported data from file:\n</string>
