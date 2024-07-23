@@ -27,7 +27,6 @@ public class TermuxTools{
         final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         
         final EditText input = new EditText(mContext);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setTextColor(mActivity.getColor(R.color.text_color));
         if(inputString != null) input.setText(inputString.trim());
         
