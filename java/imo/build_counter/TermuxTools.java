@@ -24,6 +24,7 @@ public class TermuxTools{
         
         final EditText input = new EditText(mContext);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setTextColor(mActivity.getColor(R.color.text_color));
         
         builder.setView(input);
         builder.setTitle("Run Script on Termux");
@@ -48,7 +49,9 @@ public class TermuxTools{
                     runScript(mContext, input.getText().toString());
                 }
             });
-        builder.show();
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(R.color.primary);
+        dialog.show();
     }
 
     static void runScript(Context context, String script){
