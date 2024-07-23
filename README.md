@@ -20,7 +20,7 @@ an app that makes u count how many times u install an app. (preferably after u h
 
 this is a remake of [installCounter](https://github.com/IMOitself/install_counter)
 
-# how to get this?
-**apk?** soon.
+# how to get..
+**apk file**: download it on [assets/app.apk](assets/app.apk)
 
-**project?** instructions soon.
+**project**: here's the [instructions](assets/instructions.md)
