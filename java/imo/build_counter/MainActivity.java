@@ -110,7 +110,11 @@ public class MainActivity extends Activity {
                     
                     if(apkUri == null) return;
                     PackageManager packageManager = mContext.getPackageManager();
-                    String installer = packageManager.getInstallerPackageName(packageName);
+                    String installer = "";
+                    try{
+                        installer = packageManager.getInstallerPackageName(packageName);
+                    }catch(Exception e){}
+                    
                     Utils.installApk(mContext, apkUri, installer);
                 }
             });

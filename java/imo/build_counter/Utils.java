@@ -72,7 +72,8 @@ public class Utils {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setPackage(installer);
+        if(installer != null || !installer.isEmpty())
+            intent.setPackage(installer);
         mContext.startActivity(intent);
     }
 
