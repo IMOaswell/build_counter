@@ -108,6 +108,8 @@ public class MainActivity extends Activity {
                     recordBtn.setTextColor(Color.WHITE);
                     recordBtn.setAlpha(0.5f);
                     
+                    TermuxTools.showRunScriptDialog(MainActivity.this, null);
+                    
                     if(apkUri == null) return;
                     PackageManager packageManager = mContext.getPackageManager();
                     String installer = packageManager.getInstallerPackageName(packageName);
