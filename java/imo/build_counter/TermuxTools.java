@@ -18,13 +18,18 @@ public class TermuxTools{
         activity.requestPermissions(new String[]{"com.termux.permission.RUN_COMMAND"}, 69);
     }
     
-    static void showRunScriptDialog(final Activity mActivity, final Runnable onRunScript){
+    static void showRunScriptDialog(Activity activity, final OnRunScript onRunScript){
+        showRunScriptDialog(activity, null, onRunScript);
+    }
+    
+    static void showRunScriptDialog(final Activity mActivity, String inputString, final OnRunScript onRunScript){
         final Context mContext = mActivity;
         final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         
         final EditText input = new EditText(mContext);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setTextColor(mActivity.getColor(R.color.text_color));
+        if(inputString != null) input.setText(inputString.trim());
         
         builder.setView(input);
         builder.setTitle("Run Script on Termux");
@@ -39,19 +44,31 @@ public class TermuxTools{
         builder.setPositiveButton("Run", new DialogInterface.OnClickListener(){
                 @Override
                 public void onClick(DialogInterface dialog, int which){
-                    if(onRunScript != null) onRunScript.run();
                     if(!hasPermission(mActivity)){
                         requestPermission(mActivity);
                         dialog.cancel();
                         showRunScriptDialog(mActivity, onRunScript);
                         return;
                     }
-                    runScript(mContext, input.getText().toString());
+                    
+                    String script = input.getText().toString();
+                    
+                    if(onRunScript != null){
+                        onRunScript.outputScript = script;
+                        onRunScript.run();
+                    }
+                    runScript(mContext, script);
                 }
             });
         AlertDialog dialog = builder.create();
         dialog.getWindow().setBackgroundDrawableResource(R.color.primary);
         dialog.show();
+    }
+    
+    static class OnRunScript implements Runnable{
+        static String outputScript;
+        @Override
+        public void run() {}
     }
 
     static void runScript(Context context, String script){
