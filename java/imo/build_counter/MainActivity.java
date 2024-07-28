@@ -68,6 +68,7 @@ public class MainActivity extends Activity {
         final SharedPreferences sp = getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE);
         final String COUNT_HISTORY_KEY = packageName + ":count_history";
         final String LATEST_COUNT_KEY = packageName + ":latest_count";
+        final String SCRIPT_KEY = packageName + ":script";
 
         String recordString = sp.getString(LATEST_COUNT_KEY, "");
         if(recordString.isEmpty()) recordString = "0 ";
@@ -108,14 +109,18 @@ public class MainActivity extends Activity {
                     recordBtn.setTextColor(Color.WHITE);
                     recordBtn.setAlpha(0.5f);
                     
-                    if(apkUri == null) return;
-                    PackageManager packageManager = mContext.getPackageManager();
-                    String installer = "";
-                    try{
-                        installer = packageManager.getInstallerPackageName(packageName);
-                    }catch(Exception e){}
+                    TermuxTools.showRunScriptDialog(MainActivity.this, 
+                    sp.getString(SCRIPT_KEY, ""),
+                    new TermuxTools.OnRunScript(){
+                        @Override
+                        public void run(){
+                            sp.edit().putString(SCRIPT_KEY, outputScript).apply();
+                            if(apkUri == null) return;
+                            installApk(apkUri, packageName);
+                        }
+                    });
                     
-                    Utils.installApk(mContext, apkUri, installer);
+                    
                 }
             });
 
@@ -154,6 +159,15 @@ public class MainActivity extends Activity {
                     }
                 }
             });
+    }
+    
+    void installApk(Uri apkUri, String packageName){
+        PackageManager packageManager = mContext.getPackageManager();
+        String installer = "";
+        try{
+        installer = packageManager.getInstallerPackageName(packageName);
+        }catch(Exception e){}
+        Utils.installApk(mContext, apkUri, installer);
     }
 
     @Override
